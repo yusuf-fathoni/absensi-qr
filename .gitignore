@@ -1,0 +1,20 @@
+# Environment & secret
+.env
+
+# Dependensi
+/vendor/
+
+# Log runtime
+/logs/
+*.log
+
+# Editor & OS
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Composer
+composer.phar

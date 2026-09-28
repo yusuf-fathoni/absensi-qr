@@ -1,0 +1,77 @@
+@media print {
+    .no-print { display: none !important; }
+    .print-only { display: block !important; }
+}
+.print-only { display: none; }
+
+.scan-line {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+    box-shadow: 0 0 8px #22d3ee;
+    animation: scanMove 2.2s ease-in-out infinite;
+}
+@keyframes scanMove {
+    0% { top: 6%; opacity: 1; }
+    50% { top: 92%; opacity: 1; }
+    100% { top: 6%; opacity: 1; }
+}
+
+#qr-reader {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+#qr-reader video {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+/* Tabel responsif: jadi kartu per baris di layar < 640px */
+@media (max-width: 639px) {
+    .stack-mobile thead { display: none; }
+    .stack-mobile,
+    .stack-mobile tbody,
+    .stack-mobile tr,
+    .stack-mobile td { display: block; width: 100%; }
+    .stack-mobile tr {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        padding: 6px 0;
+        background: #fff;
+    }
+    .stack-mobile tbody > tr:hover { background: #fff; }
+    .stack-mobile td {
+        border: none;
+        padding: 6px 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        text-align: right;
+    }
+    .stack-mobile td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        font-size: 11px;
+        color: #6b7280;
+        text-transform: uppercase;
+        text-align: left;
+        flex-shrink: 0;
+    }
+    .stack-mobile td.hidden { display: none !important; }
+    .stack-mobile td.aksi-cell {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: left;
+        gap: 8px;
+    }
+    .stack-mobile td.aksi-cell::before { text-align: left; }
+}
