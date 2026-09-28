@@ -22,33 +22,33 @@ $rekap = hitungRekap($tanggalMulai, $tanggalAkhir, $kelasId);
 <?php require_once __DIR__ . '/../../includes/header.php'; ?>
 
 <div class="mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">Rekap Absensi</h1>
+    <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Rekap Absensi</h1>
 </div>
 
 <?php if (isset($_GET['alpa_sukses'])): ?>
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+    <div class="alert alert-ok">
         <?= htmlspecialchars($_GET['alpa_sukses']) ?>
     </div>
 <?php endif; ?>
 <?php if (isset($_GET['alpa_gagal'])): ?>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <div class="alert alert-err">
         <?= htmlspecialchars($_GET['alpa_gagal']) ?>
     </div>
 <?php endif; ?>
 
-<div class="bg-white rounded-lg shadow p-4 mb-6">
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-6">
     <form method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Dari Tanggal</label>
-            <input type="date" name="tanggal_mulai" value="<?= htmlspecialchars($tanggalMulai) ?>" class="w-full px-3 py-2 border rounded-lg text-sm">
+            <input type="date" name="tanggal_mulai" value="<?= htmlspecialchars($tanggalMulai) ?>" class="input">
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Sampai Tanggal</label>
-            <input type="date" name="tanggal_akhir" value="<?= htmlspecialchars($tanggalAkhir) ?>" class="w-full px-3 py-2 border rounded-lg text-sm">
+            <input type="date" name="tanggal_akhir" value="<?= htmlspecialchars($tanggalAkhir) ?>" class="input">
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Kelas</label>
-            <select name="kelas_id" class="w-full px-3 py-2 border rounded-lg text-sm">
+            <select name="kelas_id" class="input">
                 <option value="">Semua</option>
                 <?php foreach ($kelasList as $k): ?>
                     <option value="<?= $k['id'] ?>" <?= ($kelasId == $k['id']) ? 'selected' : '' ?>><?= htmlspecialchars($k['nama_kelas']) ?></option>
@@ -57,7 +57,7 @@ $rekap = hitungRekap($tanggalMulai, $tanggalAkhir, $kelasId);
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select name="status" class="w-full px-3 py-2 border rounded-lg text-sm">
+            <select name="status" class="input">
                 <option value="">Semua</option>
                 <?php foreach (['Hadir', 'Terlambat', 'Izin', 'Sakit', 'Alpa'] as $s): ?>
                     <option value="<?= $s ?>" <?= ($status === $s) ? 'selected' : '' ?>><?= $s ?></option>
@@ -65,11 +65,11 @@ $rekap = hitungRekap($tanggalMulai, $tanggalAkhir, $kelasId);
             </select>
         </div>
         <div class="flex items-end space-x-2">
-            <button type="submit" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition text-sm">
+            <button type="submit" class="btn btn-primary flex-1">
                 Filter
             </button>
             <?php if (!empty($rekapList)): ?>
-                <a href="cetak.php?tanggal_mulai=<?= urlencode($tanggalMulai) ?>&tanggal_akhir=<?= urlencode($tanggalAkhir) ?>&kelas_id=<?= urlencode((string)($kelasId ?? '')) ?>&status=<?= urlencode((string)($status ?? '')) ?>" target="_blank" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm whitespace-nowrap">
+                <a href="cetak.php?tanggal_mulai=<?= urlencode($tanggalMulai) ?>&tanggal_akhir=<?= urlencode($tanggalAkhir) ?>&kelas_id=<?= urlencode((string)($kelasId ?? '')) ?>&status=<?= urlencode((string)($status ?? '')) ?>" target="_blank" class="btn btn-success">
                     Cetak
                 </a>
             <?php endif; ?>
@@ -85,7 +85,7 @@ $rekap = hitungRekap($tanggalMulai, $tanggalAkhir, $kelasId);
             <input type="hidden" name="kelas_id" value="<?= htmlspecialchars((string)($kelasId ?? '')) ?>">
             <input type="hidden" name="siswa_id" value="<?= htmlspecialchars((string)($siswaId ?? '')) ?>">
             <input type="hidden" name="status" value="<?= htmlspecialchars((string)($status ?? '')) ?>">
-            <button type="submit" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition text-sm whitespace-nowrap">
+            <button type="submit" class="btn btn-neutral">
                 Proses Alpa (rentang ini)
             </button>
         </form>
@@ -93,34 +93,34 @@ $rekap = hitungRekap($tanggalMulai, $tanggalAkhir, $kelasId);
 </div>
 
 <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-6">
-    <div class="bg-white rounded-lg shadow p-4 text-center">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
         <p class="text-2xl font-bold text-green-600"><?= $rekap['Hadir'] ?? 0 ?></p>
         <p class="text-sm text-gray-500">Hadir</p>
     </div>
-    <div class="bg-white rounded-lg shadow p-4 text-center">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
         <p class="text-2xl font-bold text-yellow-600"><?= $rekap['Terlambat'] ?? 0 ?></p>
         <p class="text-sm text-gray-500">Terlambat</p>
     </div>
-    <div class="bg-white rounded-lg shadow p-4 text-center">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
         <p class="text-2xl font-bold text-blue-600"><?= $rekap['Izin'] ?? 0 ?></p>
         <p class="text-sm text-gray-500">Izin</p>
     </div>
-    <div class="bg-white rounded-lg shadow p-4 text-center">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
         <p class="text-2xl font-bold text-red-600"><?= $rekap['Sakit'] ?? 0 ?></p>
         <p class="text-sm text-gray-500">Sakit</p>
     </div>
-    <div class="bg-white rounded-lg shadow p-4 text-center">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
         <p class="text-2xl font-bold text-gray-600"><?= $rekap['Alpa'] ?? 0 ?></p>
         <p class="text-sm text-gray-500">Alpa</p>
     </div>
 </div>
 
 <?php if (empty($rekapList)): ?>
-    <div class="bg-white rounded-lg shadow p-8 text-center">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center">
         <p class="text-gray-500">Tidak ada data absensi untuk filter ini.</p>
     </div>
 <?php else: ?>
-    <div class="bg-white rounded-lg shadow overflow-x-auto">
+    <div class="table-card">
         <table class="w-full stack-mobile">
             <thead class="bg-gray-50">
                 <tr>

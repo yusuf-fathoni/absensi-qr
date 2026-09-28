@@ -20,26 +20,26 @@ $menungguCount = hitungPengajuanMenunggu();
 
 <div class="mb-6 flex items-center justify-between flex-wrap gap-2">
     <div>
-        <h1 class="text-2xl font-bold text-gray-800">Pengajuan Izin/Sakit</h1>
-        <p class="text-gray-500"><?= $menungguCount ?> pengajuan menunggu persetujuan</p>
+        <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Pengajuan Izin/Sakit</h1>
+        <p class="text-gray-500 text-sm mt-1"><?= $menungguCount ?> pengajuan menunggu persetujuan</p>
     </div>
 </div>
 
 <?php if (isset($_GET['sukses'])): ?>
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+    <div class="alert alert-ok">
         <?= htmlspecialchars($_GET['sukses']) ?>
     </div>
 <?php endif; ?>
 <?php if (isset($_GET['gagal'])): ?>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <div class="alert alert-err">
         <?= htmlspecialchars($_GET['gagal']) ?>
     </div>
 <?php endif; ?>
 
-<div class="bg-white rounded-lg shadow p-4 mb-6">
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-6">
     <form method="GET" class="flex flex-wrap items-center gap-3">
         <label class="text-sm font-medium text-gray-700">Status:</label>
-        <select name="status" onchange="this.form.submit()" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+        <select name="status" onchange="this.form.submit()" class="text-sm border border-gray-200 rounded-xl px-3 py-2 bg-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
             <option value="">Semua</option>
             <?php foreach (['Menunggu', 'Disetujui', 'Ditolak'] as $s): ?>
                 <option value="<?= $s ?>" <?= $statusFilter === $s ? 'selected' : '' ?>><?= $s ?></option>
@@ -48,7 +48,7 @@ $menungguCount = hitungPengajuanMenunggu();
     </form>
 </div>
 
-<div class="bg-white rounded-lg shadow overflow-x-auto mb-6">
+<div class="table-card mb-6">
     <?php if (empty($daftarPengajuan)): ?>
         <div class="p-8 text-center">
             <p class="text-gray-500">Tidak ada pengajuan<?= $statusFilter ? ' dengan status ' . htmlspecialchars($statusFilter) : '' ?>.</p>
@@ -94,25 +94,25 @@ $menungguCount = hitungPengajuanMenunggu();
                                         <?= csrf_field() ?>
                                         <input type="hidden" name="aksi" value="setujui">
                                         <input type="hidden" name="id" value="<?= $p['id'] ?>">
-                                        <button type="submit" class="w-full sm:w-auto bg-green-600 text-white px-3 py-2 sm:py-1 rounded text-sm text-center hover:bg-green-700 transition">Setujui</button>
+                                        <button type="submit" class="btn btn-sm btn-success w-full sm:w-auto">Setujui</button>
                                     </form>
                                     <form method="POST" action="/admin/absensi/proses_pengajuan.php" class="sm:flex sm:items-center sm:gap-1">
                                         <?= csrf_field() ?>
                                         <input type="hidden" name="aksi" value="tolak">
                                         <input type="hidden" name="id" value="<?= $p['id'] ?>">
                                         <input type="text" name="admin_note" placeholder="Catatan (opsional)"
-                                            class="hidden sm:block px-2 py-1 border border-gray-300 rounded text-sm w-28 md:w-36 focus:outline-none focus:border-blue-500">
-                                        <button type="submit" class="w-full sm:w-auto bg-red-600 text-white px-3 py-2 sm:py-1 rounded text-sm text-center hover:bg-red-700 transition">Tolak</button>
+                                            class="hidden sm:block px-2 py-1 border border-gray-200 rounded-lg text-sm w-28 md:w-36 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
+                                        <button type="submit" class="btn btn-sm btn-danger w-full sm:w-auto">Tolak</button>
                                     </form>
                                 <?php endif; ?>
                                 <a href="/admin/absensi/edit_pengajuan.php?id=<?= $p['id'] ?>"
-                                    class="block col-span-2 w-full sm:w-auto text-center bg-blue-600 text-white px-3 py-2 sm:py-1 rounded text-sm hover:bg-blue-700 transition">Edit</a>
+                                    class="btn btn-sm btn-primary col-span-2 w-full sm:w-auto text-center">Edit</a>
                                 <form method="POST" action="/admin/absensi/proses_pengajuan.php" class="col-span-2"
                                     onsubmit="return confirm('Hapus pengajuan <?= htmlspecialchars($p['nama']) ?> (<?= date('d M Y', strtotime($p['tanggal'])) ?>)?<?= $p['status'] === 'Disetujui' ? ' Data absensi terkait ikut dihapus.' : ''; ?>');">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="aksi" value="hapus">
                                     <input type="hidden" name="id" value="<?= $p['id'] ?>">
-                                    <button type="submit" class="w-full sm:w-auto bg-red-700 text-white px-3 py-2 sm:py-1 rounded text-sm text-center hover:bg-red-800 transition">Hapus</button>
+                                    <button type="submit" class="btn btn-sm btn-danger w-full sm:w-auto">Hapus</button>
                                 </form>
                             </div>
                         </td>
@@ -123,16 +123,16 @@ $menungguCount = hitungPengajuanMenunggu();
     <?php endif; ?>
 </div>
 
-<div class="bg-white rounded-lg shadow p-6">
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
     <h2 class="text-lg font-semibold text-gray-800 mb-4">Input Manual Izin/Sakit</h2>
     <form method="POST" action="/admin/absensi/proses_pengajuan.php">
         <?= csrf_field() ?>
         <input type="hidden" name="aksi" value="manual">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="siswa_id">Siswa</label>
+                <label class="label" for="siswa_id">Siswa</label>
                 <select name="siswa_id" id="siswa_id" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    class="input">
                     <option value="">-- Pilih Siswa --</option>
                     <?php foreach ($siswaList as $s): ?>
                         <option value="<?= $s['id'] ?>"><?= htmlspecialchars($s['nama'] . ' - ' . $s['nis'] . ' (' . $s['nama_kelas'] . ')') ?></option>
@@ -140,15 +140,15 @@ $menungguCount = hitungPengajuanMenunggu();
                 </select>
             </div>
             <div>
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="tanggal">Tanggal</label>
+                <label class="label" for="tanggal">Tanggal</label>
                 <input type="date" name="tanggal" id="tanggal" value="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d') ?>" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    class="input">
             </div>
             <div>
-                <label class="block text-gray-700 text-sm font-bold mb-2">Jenis</label>
+                <label class="label">Jenis</label>
                 <div class="grid grid-cols-2 gap-2">
                     <?php foreach (['Izin', 'Sakit'] as $j): ?>
-                        <label class="flex items-center justify-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                        <label class="flex items-center justify-center p-3 border rounded-xl cursor-pointer hover:bg-gray-50">
                             <input type="radio" name="jenis" value="<?= $j ?>" <?= $j === 'Izin' ? 'checked' : '' ?> required class="mr-2"
                                 onchange="this.closest('label').classList.toggle('border-blue-500', this.checked); this.closest('label').classList.toggle('bg-blue-50', this.checked);">
                             <?= $j ?>
@@ -159,13 +159,13 @@ $menungguCount = hitungPengajuanMenunggu();
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 items-end">
             <div class="md:col-span-2">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="keterangan">Keterangan</label>
+                <label class="label" for="keterangan">Keterangan</label>
                 <textarea name="keterangan" id="keterangan" rows="3" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="input"
                     placeholder="Isi keterangan..."></textarea>
             </div>
             <div class="flex md:justify-end">
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition w-full md:w-auto">
+                <button type="submit" class="btn btn-primary w-full md:w-auto">
                     Simpan
                 </button>
             </div>

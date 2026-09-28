@@ -7,7 +7,7 @@ requireAdmin();
 <?php require_once __DIR__ . '/../../includes/header.php'; ?>
 
 <div class="max-w-md mx-auto">
-    <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Scan Absensi</h1>
+    <h1 class="text-2xl font-bold text-gray-800 tracking-tight mb-4 text-center">Scan Absensi</h1>
 
     <div id="scanner-container" class="relative w-full aspect-square bg-black rounded-2xl overflow-hidden shadow-lg">
         <div id="qr-reader"></div>
@@ -38,16 +38,16 @@ requireAdmin();
     </div>
 
     <div class="flex space-x-2 mt-4">
-        <button id="startBtn" class="flex-1 bg-cyan-600 text-white py-3 rounded-lg hover:bg-cyan-700 transition font-semibold">
+        <button id="startBtn" class="btn btn-primary flex-1 py-3 font-semibold">
             Mulai Scan
         </button>
-        <button id="stopBtn" class="flex-1 bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition font-semibold hidden">
+        <button id="stopBtn" class="btn btn-danger flex-1 py-3 font-semibold hidden">
             Stop
         </button>
     </div>
 </div>
 
-<div id="secureWarning" class="hidden max-w-md mx-auto mt-4 bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded-lg text-sm">
+<div id="secureWarning" class="hidden max-w-md mx-auto mt-4 bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl text-sm">
     Perhatian: akses halaman ini bukan lewat <strong>localhost</strong> maupun <strong>HTTPS</strong>.
     Sebagian besar browser memblokir kamera di alamat seperti <code>http://192.168.x.x:8000</code>.
     Buka lewat <code>http://localhost:8000</code> dari komputer server.

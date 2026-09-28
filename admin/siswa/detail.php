@@ -34,27 +34,27 @@ if (isset($_GET['hapus_berhasil'])) {
 
 <div class="flex justify-between items-center mb-6">
     <div>
-        <a href="/admin/siswa/index.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition mb-2 inline-block">&larr; Kembali ke Daftar Kelas</a>
-        <h1 class="text-2xl font-bold text-gray-800">Siswa Kelas <?= htmlspecialchars($kelas['nama_kelas']) ?></h1>
+        <a href="/admin/siswa/index.php" class="btn btn-secondary mb-2 inline-flex">&larr; Kembali ke Daftar Kelas</a>
+        <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Siswa Kelas <?= htmlspecialchars($kelas['nama_kelas']) ?></h1>
     </div>
-    <a href="/admin/siswa/tambah.php?kelas_id=<?= $kelasId ?>" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+    <a href="/admin/siswa/tambah.php?kelas_id=<?= $kelasId ?>" class="btn btn-primary">
         + Tambah Siswa
     </a>
 </div>
 
 <?php if (!empty($success)): ?>
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" data-auto-hide>
+    <div class="alert alert-ok" data-auto-hide>
         <?= htmlspecialchars($success) ?>
     </div>
 <?php endif; ?>
 
 <?php if (empty($siswaList)): ?>
-    <div class="bg-white rounded-lg shadow p-8 text-center">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center">
         <p class="text-gray-500 mb-4">Belum ada siswa di kelas ini.</p>
         <a href="/admin/siswa/tambah.php?kelas_id=<?= $kelasId ?>" class="text-blue-600 hover:underline">+ Tambah Siswa</a>
     </div>
 <?php else: ?>
-    <div class="bg-white rounded-lg shadow overflow-x-auto">
+    <div class="table-card">
         <table class="w-full">
             <thead class="bg-gray-50">
                 <tr>
@@ -71,11 +71,11 @@ if (isset($_GET['hapus_berhasil'])) {
                         <td class="px-6 py-4"><?= htmlspecialchars($s['nis']) ?></td>
                         <td class="px-6 py-4"><?= htmlspecialchars($s['nama']) ?></td>
                         <td class="px-6 py-4 space-x-2">
-                            <a href="/admin/siswa/edit.php?id=<?= $s['id'] ?>" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm">Edit</a>
+                            <a href="/admin/siswa/edit.php?id=<?= $s['id'] ?>" class="btn btn-sm btn-secondary">Edit</a>
                             <form method="POST" action="/admin/siswa/hapus.php" class="inline" onsubmit="return confirm('Hapus siswa <?= htmlspecialchars($s['nama']) ?>?');">
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="id" value="<?= $s['id'] ?>">
-                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">Hapus</button>
+                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                             </form>
                         </td>
                     </tr>

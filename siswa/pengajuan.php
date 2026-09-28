@@ -44,23 +44,23 @@ $daftarPengajuan = getPengajuanSiswa($siswa['id']);
 <?php require_once __DIR__ . '/../includes/header.php'; ?>
 
 <div class="mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">Ajukan Izin/Sakit</h1>
-    <p class="text-gray-500"><?= date('d F Y', strtotime($today)) ?></p>
+    <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Ajukan Izin/Sakit</h1>
+    <p class="text-gray-500 text-sm mt-1"><?= date('d F Y', strtotime($today)) ?></p>
 </div>
 
 <?php if (isset($_GET['sukses'])): ?>
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+    <div class="alert alert-ok">
         Pengajuan berhasil dikirim. Menunggu persetujuan admin.
     </div>
 <?php endif; ?>
 
 <?php if ($error): ?>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <div class="alert alert-err">
         <?= htmlspecialchars($error) ?>
     </div>
 <?php endif; ?>
 
-<div class="bg-white rounded-lg shadow p-6 mb-6">
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
     <h2 class="text-lg font-semibold text-gray-800 mb-4">Formulir Pengajuan Hari Ini</h2>
 
     <?php if ($absensiHariIni): ?>
@@ -71,10 +71,10 @@ $daftarPengajuan = getPengajuanSiswa($siswa['id']);
         <form method="POST" action="">
             <?= csrf_field() ?>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Jenis</label>
+                <label class="label">Jenis</label>
                 <div class="grid grid-cols-2 gap-2 max-w-full sm:max-w-sm">
                     <?php foreach (['Izin', 'Sakit'] as $j): ?>
-                        <label class="flex items-center justify-center p-4 sm:p-3 border rounded-lg cursor-pointer hover:bg-gray-50 <?= (($_POST['jenis'] ?? '') === $j) ? 'border-blue-500 bg-blue-50' : '' ?>">
+                        <label class="flex items-center justify-center p-4 sm:p-3 border rounded-xl cursor-pointer hover:bg-gray-50 <?= (($_POST['jenis'] ?? '') === $j) ? 'border-blue-500 bg-blue-50' : '' ?>">
                             <input type="radio" name="jenis" value="<?= $j ?>" <?= (($_POST['jenis'] ?? '') === $j) ? 'checked' : '' ?> required class="mr-2"
                                 onchange="this.closest('label').classList.toggle('border-blue-500', this.checked); this.closest('label').classList.toggle('bg-blue-50', this.checked);">
                             <?= $j ?>
@@ -83,19 +83,19 @@ $daftarPengajuan = getPengajuanSiswa($siswa['id']);
                 </div>
             </div>
             <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="alasan">Alasan</label>
+                <label class="label" for="alasan">Alasan</label>
                 <textarea name="alasan" id="alasan" rows="3" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="input"
                     placeholder="Tulis alasan..."><?= htmlspecialchars($_POST['alasan'] ?? '') ?></textarea>
             </div>
-            <button type="submit" class="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+            <button type="submit" class="btn btn-primary w-full sm:w-auto">
                 Kirim Pengajuan
             </button>
         </form>
     <?php endif; ?>
 </div>
 
-<div class="bg-white rounded-lg shadow p-6">
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
     <h2 class="text-lg font-semibold text-gray-800 mb-4">Riwayat Pengajuan</h2>
 
     <?php if (empty($daftarPengajuan)): ?>

@@ -38,15 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require_once __DIR__ . '/../../includes/header.php'; ?>
 
 <div class="max-w-md mx-auto">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Pengajuan</h1>
+    <h1 class="text-2xl font-bold text-gray-800 tracking-tight mb-6">Edit Pengajuan</h1>
 
     <?php if ($error): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div class="alert alert-err">
             <?= htmlspecialchars($error) ?>
         </div>
     <?php endif; ?>
 
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <div class="mb-4 bg-gray-50 rounded-lg p-4">
             <p><span class="font-medium">Nama:</span> <?= htmlspecialchars($pengajuan['nama']) ?></p>
             <p><span class="font-medium">NIS:</span> <?= htmlspecialchars($pengajuan['nis']) ?></p>
@@ -60,13 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST" action="">
             <?= csrf_field() ?>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="tanggal">Tanggal</label>
+                <label class="label" for="tanggal">Tanggal</label>
                 <input type="date" name="tanggal" id="tanggal" value="<?= htmlspecialchars($pengajuan['tanggal']) ?>" max="<?= date('Y-m-d') ?>" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    class="input">
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Jenis</label>
+                <label class="label">Jenis</label>
                 <div class="grid grid-cols-2 gap-2">
                     <?php foreach (['Izin', 'Sakit'] as $j): ?>
                         <label class="flex items-center justify-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50 <?= $pengajuan['jenis'] === $j ? 'border-blue-500 bg-blue-50' : '' ?>">
@@ -79,24 +79,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="alasan">Alasan</label>
+                <label class="label" for="alasan">Alasan</label>
                 <textarea name="alasan" id="alasan" rows="3" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="input"
                     placeholder="Tulis alasan..."><?= htmlspecialchars($_POST['alasan'] ?? $pengajuan['alasan']) ?></textarea>
             </div>
 
             <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="admin_note">Catatan Admin</label>
+                <label class="label" for="admin_note">Catatan Admin</label>
                 <textarea name="admin_note" id="admin_note" rows="2"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="input"
                     placeholder="Opsional..."><?= htmlspecialchars($_POST['admin_note'] ?? ($pengajuan['admin_note'] ?? '')) ?></textarea>
             </div>
 
             <div class="flex space-x-2">
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                <button type="submit" class="btn btn-primary">
                     Simpan
                 </button>
-                <a href="/admin/absensi/pengajuan.php" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                <a href="/admin/absensi/pengajuan.php" class="btn btn-secondary">
                     Batal
                 </a>
             </div>

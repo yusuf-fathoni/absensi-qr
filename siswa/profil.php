@@ -47,15 +47,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require_once __DIR__ . '/../includes/header.php'; ?>
 
 <div class="max-w-2xl mx-auto">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Profil Saya</h1>
+    <h1 class="text-2xl font-bold text-gray-800 tracking-tight mb-6">Profil Saya</h1>
 
     <?php if (isset($_GET['sukses'])): ?>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        <div class="alert alert-ok">
             Password berhasil diubah.
         </div>
     <?php endif; ?>
 
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
         <div class="flex items-center space-x-4">
             <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl font-bold flex-shrink-0">
                 <?= htmlspecialchars($inisial) ?>
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
         <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Akun</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -89,27 +89,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6 flex items-center justify-between flex-wrap gap-4">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex items-center justify-between flex-wrap gap-4">
         <div>
             <h2 class="text-lg font-semibold text-gray-800">Keamanan Akun</h2>
             <p class="text-sm text-gray-500">Ganti password akun kamu</p>
         </div>
         <button type="button" id="btnUbahPassword"
-            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+            class="btn btn-primary">
             Ubah Password
         </button>
     </div>
 </div>
 
 <div id="modalUbahPassword" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 <?= $errorPassword ? '' : 'hidden' ?>">
-    <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-lg font-semibold text-gray-800">Ubah Password</h2>
             <button type="button" id="btnTutupModal" class="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
         </div>
 
         <?php if ($errorPassword): ?>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <div class="alert alert-err">
                 <?= htmlspecialchars($errorPassword) ?>
             </div>
         <?php endif; ?>
@@ -117,28 +117,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST" action="">
             <?= csrf_field() ?>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="password_lama">Password Lama</label>
+                <label class="label" for="password_lama">Password Lama</label>
                 <input type="password" name="password_lama" id="password_lama" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="input"
                     placeholder="Masukkan password lama">
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="password_baru">Password Baru</label>
+                <label class="label" for="password_baru">Password Baru</label>
                 <input type="password" name="password_baru" id="password_baru" required minlength="6"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="input"
                     placeholder="Minimal 6 karakter">
             </div>
             <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="konfirmasi">Konfirmasi Password Baru</label>
+                <label class="label" for="konfirmasi">Konfirmasi Password Baru</label>
                 <input type="password" name="konfirmasi" id="konfirmasi" required minlength="6"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="input"
                     placeholder="Ulangi password baru">
             </div>
             <div class="flex space-x-2">
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                <button type="submit" class="btn btn-primary">
                     Simpan Password
                 </button>
-                <button type="button" id="btnBatalModal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                <button type="button" id="btnBatalModal" class="btn btn-secondary">
                     Batal
                 </button>
             </div>

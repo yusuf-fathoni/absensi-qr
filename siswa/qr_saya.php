@@ -16,19 +16,19 @@ $qrDataUrl = getQRDataUrl($siswa['qr_token']);
 <?php require_once __DIR__ . '/../includes/header.php'; ?>
 
 <div class="max-w-md mx-auto">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">QR Absensi Saya</h1>
+    <h1 class="text-2xl font-bold text-gray-800 tracking-tight mb-6 text-center">QR Absensi Saya</h1>
 
-    <div class="bg-white rounded-lg shadow p-8 text-center">
-        <p class="text-gray-500 mb-4">Tunjukkan QR ini kepada admin saat absensi</p>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center">
+        <p class="text-gray-500 text-sm mb-4">Tunjukkan QR ini kepada admin saat absensi</p>
 
         <div class="flex justify-center mb-6">
-            <img src="<?= $qrDataUrl ?>" alt="QR Code Absensi" class="border rounded-lg" width="250" height="250">
+            <img src="<?= $qrDataUrl ?>" alt="QR Code Absensi" class="border border-gray-100 rounded-xl shadow-sm" width="250" height="250">
         </div>
 
-        <div class="text-left space-y-2 bg-gray-50 rounded-lg p-4">
-            <p><span class="font-medium text-gray-700">Nama:</span> <?= htmlspecialchars($siswa['nama']) ?></p>
-            <p><span class="font-medium text-gray-700">NIS:</span> <?= htmlspecialchars($siswa['nis']) ?></p>
-            <p><span class="font-medium text-gray-700">Kelas:</span> <?= htmlspecialchars($siswa['nama_kelas']) ?></p>
+        <div class="text-left space-y-3 bg-gray-50 rounded-xl p-4 text-sm">
+            <div class="flex justify-between gap-4"><span class="text-gray-500">Nama</span><span class="font-semibold text-gray-800"><?= htmlspecialchars($siswa['nama']) ?></span></div>
+            <div class="flex justify-between gap-4"><span class="text-gray-500">NIS</span><span class="font-semibold text-gray-800"><?= htmlspecialchars($siswa['nis']) ?></span></div>
+            <div class="flex justify-between gap-4"><span class="text-gray-500">Kelas</span><span class="font-semibold text-gray-800"><?= htmlspecialchars($siswa['nama_kelas']) ?></span></div>
         </div>
     </div>
 </div>

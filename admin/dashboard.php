@@ -17,73 +17,98 @@ $stmt = $db->prepare("SELECT status, COUNT(*) as jumlah FROM absensi WHERE tangg
 $stmt->execute([$today]);
 $absensiHari = $stmt->fetchAll();
 $absensiHari = array_column($absensiHari, 'jumlah', 'status');
+
+$totalRekam = (int) $db->query("SELECT COUNT(*) FROM absensi")->fetchColumn();
 ?>
 <?php require_once __DIR__ . '/../includes/header.php'; ?>
 
 <div class="mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
+    <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Dashboard</h1>
+    <p class="text-gray-500 text-sm mt-1">Ringkasan kehadiran hari ini</p>
+</div>
+
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <p class="text-xs text-gray-500">Total Siswa</p>
+        <p class="text-3xl font-bold text-gray-800 mt-1"><?= $totalSiswa ?></p>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <p class="text-xs text-gray-500">Total Kelas</p>
+        <p class="text-3xl font-bold text-gray-800 mt-1"><?= $totalKelas ?></p>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <p class="text-xs text-gray-500">Hadir Hari Ini</p>
+        <p class="text-3xl font-bold text-green-600 mt-1"><?= $absensiHari['Hadir'] ?? 0 ?></p>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <p class="text-xs text-gray-500">Terlambat</p>
+        <p class="text-3xl font-bold text-yellow-600 mt-1"><?= $absensiHari['Terlambat'] ?? 0 ?></p>
+    </div>
 </div>
 
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-    <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-sm text-gray-500">Total Siswa</p>
-        <p class="text-2xl font-bold text-gray-800"><?= $totalSiswa ?></p>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <p class="text-xs text-gray-500">Izin</p>
+        <p class="text-3xl font-bold text-blue-600 mt-1"><?= $absensiHari['Izin'] ?? 0 ?></p>
     </div>
-    <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-sm text-gray-500">Total Kelas</p>
-        <p class="text-2xl font-bold text-gray-800"><?= $totalKelas ?></p>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <p class="text-xs text-gray-500">Sakit</p>
+        <p class="text-3xl font-bold text-red-600 mt-1"><?= $absensiHari['Sakit'] ?? 0 ?></p>
     </div>
-    <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-sm text-gray-500">Hadir Hari Ini</p>
-        <p class="text-2xl font-bold text-green-600"><?= $absensiHari['Hadir'] ?? 0 ?></p>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <p class="text-xs text-gray-500">Alpa</p>
+        <p class="text-3xl font-bold text-gray-600 mt-1"><?= $absensiHari['Alpa'] ?? 0 ?></p>
     </div>
-    <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-sm text-gray-500">Terlambat</p>
-        <p class="text-2xl font-bold text-yellow-600"><?= $absensiHari['Terlambat'] ?? 0 ?></p>
-    </div>
-</div>
-
-<div class="grid grid-cols-3 gap-4">
-    <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-sm text-gray-500">Izin</p>
-        <p class="text-2xl font-bold text-blue-600"><?= $absensiHari['Izin'] ?? 0 ?></p>
-    </div>
-    <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-sm text-gray-500">Sakit</p>
-        <p class="text-2xl font-bold text-red-600"><?= $absensiHari['Sakit'] ?? 0 ?></p>
-    </div>
-    <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-sm text-gray-500">Alpa</p>
-        <p class="text-2xl font-bold text-gray-600"><?= $absensiHari['Alpa'] ?? 0 ?></p>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <p class="text-xs text-gray-500">Total Rekam</p>
+        <p class="text-3xl font-bold text-gray-800 mt-1"><?= $totalRekam ?></p>
     </div>
 </div>
 
-<div class="bg-white rounded-lg shadow p-6 mt-6">
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
     <h2 class="text-lg font-semibold text-gray-800 mb-4">Akses Cepat</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <a href="/admin/absensi/scan.php" class="block p-4 bg-cyan-50 rounded-lg hover:bg-cyan-100 transition">
-            <p class="font-medium text-cyan-800">Scan Absensi</p>
-            <p class="text-sm text-cyan-600">Absensi siswa lewat QR code</p>
+        <a href="/admin/absensi/scan.php" class="group flex items-center justify-between gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-blue-200 hover:shadow-md hover:-translate-y-0.5 transition">
+            <span class="min-w-0">
+                <span class="block font-semibold text-gray-800 text-sm">Scan Absensi</span>
+                <span class="block text-xs text-gray-500 mt-0.5">Absensi siswa lewat QR code</span>
+            </span>
+            <svg class="w-4 h-4 text-gray-300 group-hover:text-blue-600 group-hover:translate-x-1 transition shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </a>
-        <a href="/admin/absensi/hari_ini.php" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition">
-            <p class="font-medium text-green-800">Kehadiran Hari Ini</p>
-            <p class="text-sm text-green-600">Lihat & ubah absensi hari ini</p>
+        <a href="/admin/absensi/hari_ini.php" class="group flex items-center justify-between gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-green-200 hover:shadow-md hover:-translate-y-0.5 transition">
+            <span class="min-w-0">
+                <span class="block font-semibold text-gray-800 text-sm">Kehadiran Hari Ini</span>
+                <span class="block text-xs text-gray-500 mt-0.5">Lihat &amp; ubah absensi hari ini</span>
+            </span>
+            <svg class="w-4 h-4 text-gray-300 group-hover:text-green-600 group-hover:translate-x-1 transition shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </a>
-        <a href="/admin/absensi/pengajuan.php" class="block p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition">
-            <p class="font-medium text-yellow-800">Pengajuan Izin/Sakit</p>
-            <p class="text-sm text-yellow-600">Setujui atau tolak pengajuan siswa</p>
+        <a href="/admin/absensi/pengajuan.php" class="group flex items-center justify-between gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-yellow-200 hover:shadow-md hover:-translate-y-0.5 transition">
+            <span class="min-w-0">
+                <span class="block font-semibold text-gray-800 text-sm">Pengajuan Izin/Sakit</span>
+                <span class="block text-xs text-gray-500 mt-0.5">Setujui atau tolak pengajuan siswa</span>
+            </span>
+            <svg class="w-4 h-4 text-gray-300 group-hover:text-yellow-600 group-hover:translate-x-1 transition shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </a>
-        <a href="/admin/absensi/rekap.php" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
-            <p class="font-medium text-blue-800">Rekap Bulanan</p>
-            <p class="text-sm text-blue-600">Rekap kehadiran semua siswa</p>
+        <a href="/admin/absensi/rekap.php" class="group flex items-center justify-between gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-blue-200 hover:shadow-md hover:-translate-y-0.5 transition">
+            <span class="min-w-0">
+                <span class="block font-semibold text-gray-800 text-sm">Rekap Bulanan</span>
+                <span class="block text-xs text-gray-500 mt-0.5">Rekap kehadiran semua siswa</span>
+            </span>
+            <svg class="w-4 h-4 text-gray-300 group-hover:text-blue-600 group-hover:translate-x-1 transition shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </a>
-        <a href="/admin/siswa/tambah.php" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
-            <p class="font-medium text-purple-800">Tambah Siswa</p>
-            <p class="text-sm text-purple-600">Daftarkan siswa baru</p>
+        <a href="/admin/siswa/tambah.php" class="group flex items-center justify-between gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-purple-200 hover:shadow-md hover:-translate-y-0.5 transition">
+            <span class="min-w-0">
+                <span class="block font-semibold text-gray-800 text-sm">Tambah Siswa</span>
+                <span class="block text-xs text-gray-500 mt-0.5">Daftarkan siswa baru</span>
+            </span>
+            <svg class="w-4 h-4 text-gray-300 group-hover:text-purple-600 group-hover:translate-x-1 transition shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </a>
-        <a href="/admin/kelas/tambah.php" class="block p-4 bg-pink-50 rounded-lg hover:bg-pink-100 transition">
-            <p class="font-medium text-pink-800">Tambah Kelas</p>
-            <p class="text-sm text-pink-600">Buat kelas baru</p>
+        <a href="/admin/kelas/tambah.php" class="group flex items-center justify-between gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-pink-200 hover:shadow-md hover:-translate-y-0.5 transition">
+            <span class="min-w-0">
+                <span class="block font-semibold text-gray-800 text-sm">Tambah Kelas</span>
+                <span class="block text-xs text-gray-500 mt-0.5">Buat kelas baru</span>
+            </span>
+            <svg class="w-4 h-4 text-gray-300 group-hover:text-pink-600 group-hover:translate-x-1 transition shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </a>
     </div>
 </div>

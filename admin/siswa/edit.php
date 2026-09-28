@@ -44,33 +44,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require_once __DIR__ . '/../../includes/header.php'; ?>
 
 <div class="max-w-md mx-auto">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Siswa</h1>
+    <h1 class="text-2xl font-bold text-gray-800 tracking-tight mb-6">Edit Siswa</h1>
 
     <?php if ($error): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div class="alert alert-err">
             <?= htmlspecialchars($error) ?>
         </div>
     <?php endif; ?>
 
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <form method="POST" action="">
             <?= csrf_field() ?>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="nis">NIS</label>
+                <label class="label" for="nis">NIS</label>
                 <input type="text" name="nis" id="nis" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="input"
                     value="<?= htmlspecialchars($_POST['nis'] ?? $siswa['nis']) ?>">
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="nama">Nama</label>
+                <label class="label" for="nama">Nama</label>
                 <input type="text" name="nama" id="nama" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="input"
                     value="<?= htmlspecialchars($_POST['nama'] ?? $siswa['nama']) ?>">
             </div>
             <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="kelas_id">Kelas</label>
+                <label class="label" for="kelas_id">Kelas</label>
                 <select name="kelas_id" id="kelas_id" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    class="input">
                     <option value="">-- Pilih Kelas --</option>
                     <?php foreach ($kelasList as $k): ?>
                         <option value="<?= $k['id'] ?>" <?= ($siswa['kelas_id'] == $k['id']) ? 'selected' : '' ?>>
@@ -80,10 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
             </div>
             <div class="flex space-x-2">
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                <button type="submit" class="btn btn-primary">
                     Simpan
                 </button>
-                <a href="/admin/siswa/detail.php?kelas_id=<?= $siswa['kelas_id'] ?>" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                <a href="/admin/siswa/detail.php?kelas_id=<?= $siswa['kelas_id'] ?>" class="btn btn-secondary">
                     Batal
                 </a>
             </div>
